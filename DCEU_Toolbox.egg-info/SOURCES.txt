@@ -1,0 +1,9 @@
+setup.py
+DCEU_Toolbox/Engineering.py
+DCEU_Toolbox/Management.py
+DCEU_Toolbox/UnitConverter.py
+DCEU_Toolbox/__init__.py
+DCEU_Toolbox.egg-info/PKG-INFO
+DCEU_Toolbox.egg-info/SOURCES.txt
+DCEU_Toolbox.egg-info/dependency_links.txt
+DCEU_Toolbox.egg-info/top_level.txt
