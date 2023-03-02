@@ -1,3 +1,5 @@
+LICENSE
+README.md
 setup.py
 DCEU_Toolbox/Engineering.py
 DCEU_Toolbox/Management.py
@@ -7,3 +9,4 @@ DCEU_Toolbox.egg-info/PKG-INFO
 DCEU_Toolbox.egg-info/SOURCES.txt
 DCEU_Toolbox.egg-info/dependency_links.txt
 DCEU_Toolbox.egg-info/top_level.txt
+dist/DCEU Toolbox-0.1.tar.gz
