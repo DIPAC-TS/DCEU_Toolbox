@@ -83,7 +83,7 @@ class ThermalModel(object):
     def __create_rooms_from_DXF(cls, DXFfile, z_level = 0.0, height = 3.0, roomPrefix = "room", movingVector = Vector2D(0.0, 0.0), layername = "M-ENER-ZONE-N"):
         dxf = ezdxf.readfile(DXFfile)
         msp = dxf.modelspace()
-        plines = msp.query("LWPOLYLINE[layer=='M-ENER-SPCE-N']")
+        plines = msp.query("LWPOLYLINE[layer=='" + layername + "']")
         print("Number of zones identified: {}".format(len(plines)))
         geomFaces = cls.__get_faceZones_from_plines(plines, movingVector = movingVector)
         rooms = []
