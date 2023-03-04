@@ -104,8 +104,8 @@ class ThermalModel(object):
                                                z_level = z_level,
                                                height = height,
                                                roomPrefix = filename,
-                                               movingVector = movingVector),
-                                               layername = layername)
+                                               movingVector = movingVector,
+                                               layername = layername))
             z_level += height
         #Room.solve_adjacency(rooms)
         model = Model('Mymodel', rooms, tolerance = 0)
