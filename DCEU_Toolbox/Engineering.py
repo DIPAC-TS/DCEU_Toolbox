@@ -80,7 +80,7 @@ class ThermalModel(object):
         return Room(roomName, faces, 0.001, 0.1)
     
     @classmethod
-    def __create_rooms_from_DXF(cls, DXFfile, z_level = 0.0, height = 3.0, roomPrefix = "room", movingVector = Vector2D(0.0, 0.0)):
+    def __create_rooms_from_DXF(cls, DXFfile, z_level = 0.0, height = 3.0, roomPrefix = "room", movingVector = Vector2D(0.0, 0.0), layername = "M-ENER-ZONE-N"):
         dxf = ezdxf.readfile(DXFfile)
         msp = dxf.modelspace()
         plines = msp.query("LWPOLYLINE[layer=='M-ENER-SPCE-N']")
@@ -99,12 +99,13 @@ class ThermalModel(object):
         movingVector = Vector2D(0.0, 0.0)
         for filename, height in dxfdict.items():
             if z_level == initial_level and adjustOrigin:
-                movingVector = cls.__getAdjustVector(filename + ".dxf", layername)
+                movingVector = cls.__getAdjustVector(filename + ".dxf", layername=layername)
             rooms.extend(cls.__create_rooms_from_DXF(filename + ".dxf",
                                                z_level = z_level,
                                                height = height,
                                                roomPrefix = filename,
-                                               movingVector = movingVector))
+                                               movingVector = movingVector),
+                                               layername = layername)
             z_level += height
         #Room.solve_adjacency(rooms)
         model = Model('Mymodel', rooms, tolerance = 0)
