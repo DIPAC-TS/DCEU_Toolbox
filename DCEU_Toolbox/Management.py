@@ -8,8 +8,14 @@ def __get_pattern(file_list:list, sep:str = " "):
         patterns = np.append(patterns, myfile.split(sep)[0])
     return stat.mode(patterns).mode[0], stat.mode(patterns).count[0]
 
-def purge_names(directory:str = "", sep:str = " "):
-    file_list = os.listdir()
+def __get_filelist(directory:str = ""):
+    if len(directory) > 0:
+        return os.listdir(directory)
+    else:
+        return os.listdir()
+
+def purge_filenames(directory:str = "", sep:str = " ", prefix:str="", suffix:str=""):
+    file_list = __get_filelist(directory)
     pattern, count = __get_pattern(file_list)
     files_to_edit = {}
     if count > 1:
@@ -23,4 +29,9 @@ def purge_names(directory:str = "", sep:str = " "):
         pattern, count = __get_pattern(files_to_edit.values())
     
     for key, value in files_to_edit.items():
-        os.rename(key, value)
+        os.rename(directory + "/" + key, directory + "/" + prefix + sep + value + sep + suffix)
+
+def add_to_filenames(prefix:str = "", suffix:str = "", directory:str = "", sep:str = ""):
+    file_list = __get_filelist(directory)
+    for i in file_list:
+        os.rename(directory + "/" + i, directory + "/" + prefix + sep + i + sep + suffix)
