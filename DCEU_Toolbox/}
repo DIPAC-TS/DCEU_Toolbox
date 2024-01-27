@@ -12,7 +12,7 @@ def __get_filelist(directory:str = ""):
     if len(directory) > 0:
         return os.listdir(directory), directory + "/"
     else:
-        return os.listdir(), ""
+        return os.listdir()
 
 def purge_filenames(directory:str = "", sep:str = " ", prefix:str="", suffix:str=""):
     file_list, myroot = __get_filelist(directory)
