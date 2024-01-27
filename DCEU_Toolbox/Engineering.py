@@ -141,3 +141,27 @@ def getMOB(load, v=200., ph=1):
     return load / v * 1.4
   else:
     return load / v / math.sqrt(3.) * 1.4
+  
+def airflow_parking(cars:int,
+                    area:float,
+                    CO_emission:float = 700.0,
+                    time_of_op:float = 120., 
+                    CO_acceptable:int = 35) -> float:
+    """
+    arguments:
+    ----------
+    cars - number of cars $N$ in operation during peak hour use
+    area - total floor area of parking facility $A_f$, m^2
+    CO_emission - average CO emission rate $E$ for a typical car, g/h
+    time_of_op - average length of operation and travel time $\theta$ for a typical car, s
+    CO_acceptable - acceptable CO concenctration CO_max in the garage, ppm
+    
+    returns:
+    --------
+    required ventilation rate of parking, L/s
+    """
+    G_0 = 26.7 # g/(h-m^2)
+    C = {15:1.204E-3, 25:0.692E-3, 35:0.481E-3} #(L/s)/(m^2/s))
+    G = cars * CO_emission / area #g/(h-m^2)
+    f = 100. * G / G_0    
+    return C[CO_acceptable] * f * time_of_op * area
