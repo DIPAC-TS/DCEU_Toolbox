@@ -1,4 +1,4 @@
-from scipy import stats as statmyrootmyroot
+from scipy import stats as stat
 import numpy as np
 import os
 
