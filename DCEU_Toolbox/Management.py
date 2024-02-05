@@ -34,6 +34,37 @@ def __get_filelist(directory:str = ""):
         return os.listdir(directory), directory + "/"
     else:
         return os.listdir(), ""
+    
+def __rename_file(myroot:str, key:str, value:str="", prefix="", suffix="", sep=" "):
+    """
+    This method rename a file based the original name (key) and the reference name (value), addittionally you
+    can add a prefix before the new name and a suffix after.
+    
+    arguments:
+    ----------
+    myroot - string with the directory root of the file to change the name
+    key - string with original file of the file
+    value - string with the new name of the file (if empty the new name is the key)
+    prefix - string with the new prefix to use before the new file name
+    suffix - string with the new suffix to use after the new file name
+    sep - string with the separator pattern to know how to classify the common patterns in file
+    """
+    if len(value) == 0:
+        value = key
+    # If prefix exists, it will add the separator pattern after the value
+    if len(prefix) != 0:
+        prefix += sep
+    # If suffix exists, it will add the separator pattern before the value
+    if len(suffix) != 0:
+        suffix = sep + suffix
+    # The value will be added after the prefix but if there are an extension (.ext), then it will be added the suffix before
+    # the extension
+    if len(value.split(".")) > 1:
+        prefix = prefix + "".join(value.split(".")[:-1])
+        suffix = suffix + "." + value.split(".")[-1]
+    else:
+        prefix = prefix + value
+    os.rename(myroot + key, myroot + prefix + suffix)
 
 def purge_filenames(sep:str = " ", directory:str = "", prefix:str="", suffix:str="", clones:int=1):
     """
@@ -61,7 +92,7 @@ def purge_filenames(sep:str = " ", directory:str = "", prefix:str="", suffix:str
                 files_to_edit[key] = newfilename
         pattern, count = __get_pattern(files_to_edit.values())     
     for key, value in files_to_edit.items():
-        os.rename(myroot + key, myroot + prefix + sep + value + sep + suffix)
+        __rename_file(myroot=myroot, key=key, value=value, prefix=prefix, suffix=suffix, sep=sep)
 
 def add_to_filenames(directory:str = "", prefix:str = "", suffix:str = "", sep:str = ""):
     """
@@ -76,4 +107,4 @@ def add_to_filenames(directory:str = "", prefix:str = "", suffix:str = "", sep:s
     """
     file_list, myroot = __get_filelist(directory)
     for i in file_list:
-        os.rename(myroot + i, myroot + prefix + sep + i + sep + suffix)
+        __rename_file(myroot=myroot, key=i, prefix=prefix, suffix=suffix, sep=sep)
